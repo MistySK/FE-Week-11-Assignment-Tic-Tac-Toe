@@ -1,8 +1,23 @@
-$(document).ready(()=>{
-    const currentPlayer = "X";
-    const moves = 0;
-    $("#ticTacToeGrid").click(() => {
-        
+$(document).ready(function () {
+    let currentPlayer = "X";
+    let moves = 0;
+    $('#resetButton').click(function () {
+        restartGame();
+    })
+    $("#ticTacToeGrid .grid-cell").click(function () {
+        if ($(this).text() === "" && !gameOver()) {
+            $(this).text(currentPlayer);
+            moves++;
+            if (checkWinner(currentPlayer)) {
+                showAlert(currentPlayer + " " + "Wins! You Rock!");
+                return;
+            } else if (moves === 9) {
+                showAlert("You are both losers!");
+                return;
+            }
+        currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+        $("#turnIndicator").text(currentPlayer + "'s Turn"); } 
+    });
     });
     function checkWinner(player){
         const winPatterns = [
@@ -19,17 +34,21 @@ $(document).ready(()=>{
         ]
         return winPatterns.some((pattern) => {
             return pattern.every((index) => {
-                return $('#ticTacToeGrid .grid-cell').eq(index).txt() === player;
+                return $('#ticTacToeGrid .grid-cell').eq(index).text() === player;
             })
-
         })
-    function restartGame() {
-
     }
-    function showAlert() {
-
+    function restartGame() {
+        $("#ticTacToeGrid .grid-cell").text("");
+        currentPlayer = "X";
+        $('#turnIndicator').text("X's Turn");
+        moves = 0;
+        $('.alert').remove();
+    }
+    function showAlert(message) {
+        const alertHTML = `<div class="alert alert-success" role="alert"> ${message}</div>`;
+        $('.container').prepend(alertHTML);
     }
     function gameOver() {
-
+        return $('.alert').length > 0;
     }
-})
