@@ -1,0 +1,17 @@
+#ticTacToeGrid {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 450px;
+    margin: auto;
+    justify-content: center;
+}
+
+.grid-cell {
+    width: 150px;
+    height: 150px;
+    border: 2px solid blue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+}
